@@ -746,7 +746,7 @@ function Server() {
    *                      successfully and a reply should be sent.
    */
   this.handleRollDice = function (socket, params, reply) {
-    console.log('Rolling dice');
+    console.log('Rolling diceXX');
 
     var match = this.getSocketMatch(socket);
     var player = this.getSocketPlayer(socket);
