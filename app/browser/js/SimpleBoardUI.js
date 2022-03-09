@@ -211,6 +211,8 @@ function SimpleBoardUI(client) {
     $('#btn-real-roll').unbind('click');
     $('#btn-real-roll').click(function (e) {
       self.client.reqRealRollDice();
+      //TEMPORARY CODE. REPLACE WITH GOOD CRYPTO
+      
       console.log('realroll1', e);
       console.log('realroll2', this);
     });

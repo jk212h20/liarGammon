@@ -829,9 +829,9 @@ function Server() {
       return false;
     }
 
-    var realdice = rule.realrollDice(game);
-    console.log('realdice:',realdice)
-    
+    game.realturnDice = rule.realrollDice(game);
+    //console.log('realdice:',realdice)
+    console.log('Game', game);
     return true;
   };
 
