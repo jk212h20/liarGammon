@@ -556,6 +556,7 @@ function SimpleBoardUI(client) {
 
     if ((!this.match) || (!this.match.currentGame)) {
       $('#btn-roll').hide();
+      $('#btn-real-roll').hide();
       $('#btn-confirm').hide();
       $('#btn-undo').hide();
       $('#menu-resign').hide();
@@ -566,6 +567,15 @@ function SimpleBoardUI(client) {
     var game = this.match.currentGame;
 
     $('#btn-roll').toggle(
+       game.hasStarted &&
+       (!game.isOver) &&
+       model.Game.isPlayerTurn(game, this.client.player) &&
+       (!model.Game.diceWasRolled(game)) &&
+       (!game.turnConfirmed)
+      
+    );
+
+    $('#btn-real-roll').toggle(
       game.hasStarted &&
       (!game.isOver) &&
       model.Game.isPlayerTurn(game, this.client.player) &&

@@ -167,6 +167,7 @@ function Server() {
         m.CREATE_MATCH,
         m.JOIN_MATCH,
         m.ROLL_DICE,
+        m.REAL_ROLL_DICE,
         m.MOVE_PIECE,
         m.CONFIRM_MOVES,
         m.UNDO_MOVES,
@@ -375,7 +376,12 @@ function Server() {
       reply.result = this.handleJoinMatch(socket, params, reply);
     }
     else if (msg === comm.Message.ROLL_DICE) {
+      console.log('handleRollDice');
       reply.result = this.handleRollDice(socket, params, reply);
+    } 
+    else if (msg === comm.Message.REAL_ROLL_DICE) {
+      console.log('handleRealRollDice');
+      reply.result = this.handleRealRollDice(socket, params, reply);
     }
     else if (msg === comm.Message.MOVE_PIECE) {
       reply.result = this.handleMovePiece(socket, params, reply);
@@ -745,7 +751,7 @@ function Server() {
    * @returns {boolean} - Returns true if message have been processed
    *                      successfully and a reply should be sent.
    */
-  this.handleRollDice = function (socket, params, reply) {
+   this.handleRollDice = function (socket, params, reply) {
     console.log('Rolling diceXX');
 
     var match = this.getSocketMatch(socket);
@@ -777,6 +783,55 @@ function Server() {
     var dice = rule.rollDice(game);
     game.turnDice = dice;
 
+    model.Game.snapshotState(match.currentGame);
+
+    reply.player = game.turnPlayer;
+    reply.dice = dice;
+
+    this.sendOthersMessage(
+      match,
+      player.id,
+      comm.Message.EVENT_DICE_ROLL,
+      {
+        'match': match
+      }
+    );
+
+    return true;
+  };
+
+  this.handleRealRollDice = function (socket, params, reply) {
+    console.log('Real Rolling diceXX');
+
+    var match = this.getSocketMatch(socket);
+    var player = this.getSocketPlayer(socket);
+    var rule = this.getSocketRule(socket);
+    
+    var game = match.currentGame;
+    
+    if (!game) {
+      reply.errorMessage = 'Match with ID ' + match.id + ' has no current game!';
+      return false;
+    }
+
+    if (!game.hasStarted) {
+      reply.errorMessage = 'Game with ID ' + game.id + ' is not yet started!';
+      return false;
+    }
+
+    if ((!game.turnPlayer) || (game.turnPlayer.id !== player.id)) {
+      reply.errorMessage = 'Cannot roll dice it isn\'t player ' + player.id + ' turn!';
+      return false;
+    }
+
+    if (model.Game.diceWasRolled(game)) {
+      reply.errorMessage = 'Dice was already rolled!';
+      return false;
+    }
+
+    var dice = rule.rollDice(game);
+    game.turnDice = dice;
+console.log('currentGame',match.currentGame);
     model.Game.snapshotState(match.currentGame);
 
     reply.player = game.turnPlayer;
