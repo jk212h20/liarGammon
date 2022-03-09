@@ -316,7 +316,7 @@ function Server() {
    * @param {Object} params - Object map with message parameters
    */
   this.sendOthersMessage = function (match, exceptPlayerID, msg, params) {
-    for (var i = 0; i < match.players.length-1; i++) {
+    for (var i = 0; i < match.players.length; i++) {
       if (match.players[i] === exceptPlayerID) {
         continue;
       }
@@ -829,7 +829,7 @@ function Server() {
       return false;
     }
 
-    var dice = rule.rollDice(game);
+    var dice = rule.realrollDice(game);
     game.turnDice = dice;
 console.log('currentGame',match.currentGame);
     model.Game.snapshotState(match.currentGame);
