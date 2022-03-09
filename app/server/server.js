@@ -829,23 +829,9 @@ function Server() {
       return false;
     }
 
-    var dice = rule.realrollDice(game);
-    game.turnDice = dice;
-console.log('currentGame',match.currentGame);
-    model.Game.snapshotState(match.currentGame);
-
-    reply.player = game.turnPlayer;
-    reply.dice = dice;
-
-    this.sendOthersMessage(
-      match,
-      player.id,
-      comm.Message.EVENT_DICE_ROLL,
-      {
-        'match': match
-      }
-    );
-
+    var realdice = rule.realrollDice(game);
+    console.log('realdice:',realdice)
+    
     return true;
   };
 
