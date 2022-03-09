@@ -206,6 +206,13 @@ function SimpleBoardUI(client) {
       self.client.reqRollDice();
       console.log('roll1', e);
       console.log('roll2', this);
+    }); 
+    
+    $('#btn-real-roll').unbind('click');
+    $('#btn-real-roll').click(function (e) {
+      self.client.reqRealRollDice();
+      console.log('realroll1', e);
+      console.log('realroll2', this);
     });
 
     $('#btn-confirm').unbind('click');

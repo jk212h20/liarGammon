@@ -673,8 +673,12 @@ body {
   }
   
   #btn-roll {
-      margin-top: 25%;
-  }
+    margin-top: 25%;
+}
+ 
+  #btn-real-roll {
+  margin-top: 25%;
+}
 
   div.dice-panel {
     min-width: 64px;

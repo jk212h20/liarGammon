@@ -315,7 +315,7 @@ function Server() {
    * @param {Object} params - Object map with message parameters
    */
   this.sendOthersMessage = function (match, exceptPlayerID, msg, params) {
-    for (var i = 0; i < match.players.length; i++) {
+    for (var i = 0; i < match.players.length-1; i++) {
       if (match.players[i] === exceptPlayerID) {
         continue;
       }
