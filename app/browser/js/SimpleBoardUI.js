@@ -214,10 +214,22 @@ function SimpleBoardUI(client) {
       var selected = $('#dice-selector label.active input').val();
       //#dice-selector #d1 input
       //#dice-selector
-      var radios = document.getElementsByName('d1');
+      var radios = document.getElementsByName('d1')
+      
+      //TJ this makes the radio buttons flash on when 
+      //  realroll is clicked, maybe it just doesnt have time
+      //  to load images
+      $('.dice-panel').toggle(true);
+      //my thinking on this is that maybe we are showing the dice facw
+      //  images, but the surrounding div is empty
+
+
+    $('#die0').removeClass('digit-1-white digit-2-white digit-3-white digit-4-white digit-5-white digit-6-white digit-1-black digit-2-black digit-3-black digit-4-black digit-5-black digit-6-black played');
+    $('#die0').addClass('digit-1-white');
       for (var i = 0, length=radios.length;i<length;i++){
         if(radios[i].checked){
-console.log('checked one is ',radios[i].value);
+//console.log('checked one is ',radios[i].value);
+
             }
         }
       console.log('dice selected ',radios);
@@ -712,7 +724,7 @@ console.log('checked one is ',radios[i].value);
   this.updateDie = function (dice, index, type) {
     var color = (type === model.PieceType.BLACK) ? 'black' : 'white';
     var id = '#die' + index;
-    
+    console.log('die id',id);
     // Set text
     $(id).text(dice.values[index]);
     
