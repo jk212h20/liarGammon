@@ -211,6 +211,17 @@ function SimpleBoardUI(client) {
     $('#btn-real-roll').unbind('click');
     $('#btn-real-roll').click(function (e) {
       self.client.reqRealRollDice();
+      var selected = $('#dice-selector label.active input').val();
+      //#dice-selector #d1 input
+      //#dice-selector
+      var radios = document.getElementsByName('d1');
+      for (var i = 0, length=radios.length;i<length;i++){
+        if(radios[i].checked){
+console.log('checked one is ',radios[i].value);
+            }
+        }
+      console.log('dice selected ',radios);
+
       //TEMPORARY CODE. REPLACE WITH GOOD CRYPTO
       
       console.log('realroll1', e);
