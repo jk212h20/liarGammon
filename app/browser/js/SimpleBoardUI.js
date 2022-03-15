@@ -595,7 +595,7 @@ function SimpleBoardUI(client) {
        game.hasStarted &&
        (!game.isOver) &&
        model.Game.isPlayerTurn(game, this.client.player) &&
-       (!model.Game.diceWasRolled(game)) &&
+       (!model.Game.diceWasSet(game)) &&
        (!game.turnConfirmed)
       
     );
@@ -604,7 +604,7 @@ function SimpleBoardUI(client) {
       game.hasStarted &&
       (!game.isOver) &&
       model.Game.isPlayerTurn(game, this.client.player) &&
-      (!model.Game.diceWasRolled(game)) &&
+      (!model.Game.diceWasSet(game)) &&
       (!game.turnConfirmed)
     );
     
@@ -612,7 +612,7 @@ function SimpleBoardUI(client) {
       game.hasStarted &&
       (!game.isOver) &&
       model.Game.isPlayerTurn(game, this.client.player) &&
-      model.Game.diceWasRolled(game) &&
+      model.Game.diceWasSet(game) &&
       (!model.Game.hasMoreMoves(game)) &&
       (!game.turnConfirmed);
 
@@ -620,7 +620,7 @@ function SimpleBoardUI(client) {
       game.hasStarted &&
       (!game.isOver) &&
       model.Game.isPlayerTurn(game, this.client.player) &&
-      model.Game.diceWasRolled(game) &&
+      model.Game.diceWasSet(game) &&
       (!game.turnConfirmed);
     
     $('#btn-confirm').toggle(canConfirmMove);
@@ -631,12 +631,20 @@ function SimpleBoardUI(client) {
 
     var showDice = game.hasStarted &&
       (!game.isOver) &&
-      model.Game.diceWasRolled(game) &&
+      (model.Game.diceWasSet(game)||(model.Game.lyingPhaseBegun(game))) &&
       (!game.turnConfirmed);
     $('.dice-panel').toggle(showDice);
 
     if (showDice) {
-      this.updateDice(game.turnDice, game.turnPlayer.currentPieceType);
+      if(!model.Game.diceWasSet(game)){
+        let realdice = {values:game.realturnDice,
+                        moves:game.realturnDice,
+                        movesLeft:game.realturnDice,
+                        movesPlayed:[]}
+      this.updateDice(realdice, game.turnPlayer.currentPieceType);
+      }
+      else{this.updateDice(game.turnDice, game.turnPlayer.currentPieceType);
+      }
     }
 
     console.log('Board UI updated');

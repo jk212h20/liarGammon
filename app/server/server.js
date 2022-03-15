@@ -775,7 +775,7 @@ function Server() {
       return false;
     }
 
-    if (model.Game.diceWasRolled(game)) {
+    if (model.Game.diceWasSet(game)) {
       reply.errorMessage = 'Dice was already rolled!';
       return false;
     }
@@ -824,7 +824,7 @@ function Server() {
       return false;
     }
 
-    if (model.Game.diceWasRolled(game)) {
+    if (model.Game.diceWasSet(game)) {
       reply.errorMessage = 'Dice was already rolled!';
       return false;
     }
